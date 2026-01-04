@@ -3,24 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    
+    <!-- App Info -->
+    <title>Prayan Royal Spice Emporium - Premium Indian Spices</title>
+    <meta name="description" content="Premium quality Indian spices sourced directly from farmers. Fresh, authentic, and delivered to your doorstep. Pure Taste, Pure Emotions." />
+    <meta name="author" content="Prayan Masale" />
+    <meta name="keywords" content="indian spices, masala, garam masala, turmeric, spice shop, online spices, premium spices, authentic spices" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#f97316" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Prayan Masale" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Prayan Masale" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Prayan Royal Spice Emporium - Premium Indian Spices" />
+    <meta property="og:description" content="Premium quality Indian spices sourced directly from farmers. Fresh, authentic, and delivered to your doorstep." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://prayanmasale.vercel.app" />
+    <meta property="og:image" content="https://prayanmasale.vercel.app/og-image.jpg" />
+    <meta property="og:site_name" content="Prayan Masale" />
+    <meta property="og:locale" content="en_IN" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:site" content="@prayanmasale" />
+    <meta name="twitter:title" content="Prayan Royal Spice Emporium" />
+    <meta name="twitter:description" content="Premium Indian spices delivered fresh to your doorstep" />
+    <meta name="twitter:image" content="https://prayanmasale.vercel.app/og-image.jpg" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Prayan Royal Spice Emporium",
+      "description": "Premium Indian spices sourced directly from farmers",
+      "url": "https://prayanmasale.vercel.app",
+      "telephone": "+919876543210",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Spice Market Street",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400001",
+        "addressCountry": "IN"
+      },
+      "openingHours": "Mo-Sa 09:00-20:00, Su 10:00-18:00",
+      "priceRange": "₹₹",
+      "servesCuisine": "Indian",
+      "paymentAccepted": "Cash, Credit Card, UPI"
+    }
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

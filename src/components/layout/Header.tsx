@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ShoppingBag, User, Heart, ChevronDown } from 'lucide-react';
+import { Menu, X, Search, ShoppingBag, User, Heart, ChevronDown, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -29,7 +30,9 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const { totalItems, setIsCartOpen } = useCart();
+  const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -147,12 +150,76 @@ const Header: React.FC = () => {
               </Link>
 
               <Link
-                to="/my-orders"
+                to="/wishlist"
                 className="hidden sm:flex p-2.5 rounded-full hover:bg-secondary transition-colors"
-                aria-label="My Orders"
+                aria-label="Wishlist"
               >
-                <User size={20} />
+                <Heart size={20} />
               </Link>
+
+              {/* User Account */}
+              <div className="relative">
+                {isAuthenticated ? (
+                  <div>
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="flex items-center gap-2 p-2.5 rounded-full hover:bg-secondary transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">
+                          {user?.name?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 hidden sm:block" />
+                    </button>
+                    
+                    {showUserMenu && (
+                      <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50">
+                        <div className="p-3 border-b border-border">
+                          <p className="font-medium text-sm">{user?.name}</p>
+                          <p className="text-xs text-muted-foreground">{user?.email}</p>
+                        </div>
+                        <div className="py-2">
+                          <Link
+                            to="/account"
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <User className="w-4 h-4" />
+                            My Account
+                          </Link>
+                          <Link
+                            to="/my-orders"
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <ShoppingBag className="w-4 h-4" />
+                            My Orders
+                          </Link>
+                          <button
+                            onClick={() => {
+                              logout();
+                              setShowUserMenu(false);
+                            }}
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors w-full text-left"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Logout
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to="/auth"
+                    className="hidden sm:flex p-2.5 rounded-full hover:bg-secondary transition-colors"
+                    aria-label="Login"
+                  >
+                    <User size={20} />
+                  </Link>
+                )}
+              </div>
 
               <button
                 onClick={() => setIsCartOpen(true)}
@@ -221,12 +288,28 @@ const Header: React.FC = () => {
               </nav>
 
               <div className="mt-8 pt-8 border-t border-border space-y-3">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link to="/my-orders">My Orders</Link>
-                </Button>
-                <Button variant="premium" className="w-full" asChild>
-                  <Link to="/account">Login / Sign Up</Link>
-                </Button>
+                {isAuthenticated ? (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/account">My Account</Link>
+                    </Button>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/my-orders">My Orders</Link>
+                    </Button>
+                    <Button variant="destructive" className="w-full" onClick={logout}>
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/my-orders">Track Order</Link>
+                    </Button>
+                    <Button variant="premium" className="w-full" asChild>
+                      <Link to="/auth">Login / Sign Up</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
