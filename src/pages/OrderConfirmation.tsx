@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useOrders, Order } from '@/context/OrderContext';
+import { useOrders, type Order } from '@/context/OrderContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Phone, MessageCircle, Home, Copy } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-
-interface Order {
-  id: string;
-  items: any[];
-  customerDetails: any;
-  totalPrice: number;
-  timestamp: string;
-  status: string;
-}
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
