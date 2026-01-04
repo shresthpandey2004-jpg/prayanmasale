@@ -1,14 +1,83 @@
-import React from 'react';
-import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2, Tag, Percent } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useCoupons } from '@/context/CouponContext';
+import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
 
 const CartDrawer: React.FC = () => {
   const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, totalPrice, totalItems } = useCart();
+  const { appliedCoupon, applyCoupon, removeCoupon, calculateDiscount, getAvailableCoupons } = useCoupons();
+  const { user } = useAuth();
+  
+  const [couponCode, setCouponCode] = useState('');
+  const [showAvailableCoupons, setShowAvailableCoupons] = useState(false);
+
+  const isFirstTimeUser = !user || user.createdAt === user.lastLogin;
+  const availableCoupons = getAvailableCoupons(totalPrice, isFirstTimeUser);
+  const discount = appliedCoupon ? calculateDiscount(appliedCoupon, totalPrice) : 0;
+  const finalTotal = totalPrice - discount;
 
   if (!isCartOpen) return null;
+
+  const handleApplyCoupon = () => {
+    if (!couponCode.trim()) {
+      toast({
+        title: "Enter coupon code",
+        description: "Please enter a valid coupon code.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const result = applyCoupon(couponCode.trim(), totalPrice, isFirstTimeUser);
+    
+    if (result.success) {
+      toast({
+        title: "Coupon applied! 🎉",
+        description: result.message,
+      });
+      setCouponCode('');
+      setShowAvailableCoupons(false);
+    } else {
+      toast({
+        title: "Coupon not applied",
+        description: result.message,
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    removeCoupon();
+    toast({
+      title: "Coupon removed",
+      description: "Coupon has been removed from your order.",
+    });
+  };
+
+  const handleQuickApplyCoupon = (code: string) => {
+    const result = applyCoupon(code, totalPrice, isFirstTimeUser);
+    
+    if (result.success) {
+      toast({
+        title: "Coupon applied! 🎉",
+        description: result.message,
+      });
+      setShowAvailableCoupons(false);
+    } else {
+      toast({
+        title: "Coupon not applied",
+        description: result.message,
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50">
@@ -106,14 +175,74 @@ const CartDrawer: React.FC = () => {
         {/* Footer */}
         {items.length > 0 && (
           <div className="p-6 border-t border-border bg-card">
-            {/* Coupon */}
-            <div className="flex gap-2 mb-4">
-              <input
-                type="text"
-                placeholder="Enter coupon code"
-                className="flex-1 px-4 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:border-primary"
-              />
-              <Button variant="outline" size="sm">Apply</Button>
+            {/* Coupon Section */}
+            <div className="mb-4">
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-4 h-4 text-green-600" />
+                    <div>
+                      <p className="text-sm font-medium text-green-800">{appliedCoupon.code}</p>
+                      <p className="text-xs text-green-600">{appliedCoupon.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-green-600">-₹{discount}</span>
+                    <Button variant="ghost" size="sm" onClick={handleRemoveCoupon}>
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="flex-1"
+                    />
+                    <Button variant="outline" size="sm" onClick={handleApplyCoupon}>
+                      Apply
+                    </Button>
+                  </div>
+                  
+                  {availableCoupons.length > 0 && (
+                    <div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowAvailableCoupons(!showAvailableCoupons)}
+                        className="text-xs text-primary"
+                      >
+                        <Percent className="w-3 h-3 mr-1" />
+                        {availableCoupons.length} coupon{availableCoupons.length > 1 ? 's' : ''} available
+                      </Button>
+                      
+                      {showAvailableCoupons && (
+                        <div className="mt-2 space-y-2">
+                          {availableCoupons.slice(0, 3).map(coupon => (
+                            <div
+                              key={coupon.id}
+                              className="flex items-center justify-between p-2 bg-orange-50 border border-orange-200 rounded cursor-pointer hover:bg-orange-100"
+                              onClick={() => handleQuickApplyCoupon(coupon.code)}
+                            >
+                              <div>
+                                <p className="text-xs font-medium text-orange-800">{coupon.code}</p>
+                                <p className="text-xs text-orange-600">{coupon.description}</p>
+                              </div>
+                              <Badge variant="outline" className="text-xs">
+                                {coupon.type === 'percentage' ? `${coupon.value}% OFF` : 
+                                 coupon.type === 'fixed' ? `₹${coupon.value} OFF` : 'FREE SHIP'}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Totals */}
@@ -122,13 +251,19 @@ const CartDrawer: React.FC = () => {
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>₹{totalPrice.toFixed(2)}</span>
               </div>
+              {appliedCoupon && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-green-600">Discount ({appliedCoupon.code})</span>
+                  <span className="text-green-600">-₹{discount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
                 <span className="text-cardamom">Free</span>
               </div>
               <div className="flex justify-between font-semibold text-lg pt-2 border-t border-border">
                 <span>Total</span>
-                <span className="text-primary">₹{totalPrice.toFixed(2)}</span>
+                <span className="text-primary">₹{finalTotal.toFixed(2)}</span>
               </div>
             </div>
 
