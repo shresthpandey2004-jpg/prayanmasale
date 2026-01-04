@@ -4,7 +4,6 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppButton from '@/components/common/WhatsAppButton';
 import FlashSaleBanner from '@/components/common/FlashSaleBanner';
-import SocialProofNotifications from '@/components/common/SocialProofNotifications';
 import WhatsAppChatWidget from '@/components/common/WhatsAppChatWidget';
 import HeroSection from '@/components/home/HeroSection';
 import NewLaunchSection from '@/components/home/NewLaunchSection';
@@ -37,8 +36,7 @@ const Index: React.FC = () => {
 
       <Footer />
       
-      {/* Social Proof & Chat Widgets */}
-      <SocialProofNotifications />
+      {/* Chat Widget */}
       <WhatsAppChatWidget />
       <WhatsAppButton />
     </div>
