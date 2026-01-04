@@ -197,6 +197,14 @@ const Header: React.FC = () => {
                             My Orders
                           </Link>
                           <Link
+                            to="/loyalty"
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <Gift className="w-4 h-4" />
+                            Loyalty Points
+                          </Link>
+                          <Link
                             to="/referrals"
                             className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors"
                             onClick={() => setShowUserMenu(false)}
@@ -303,6 +311,9 @@ const Header: React.FC = () => {
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
                       <Link to="/my-orders">My Orders</Link>
+                    </Button>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/loyalty">Loyalty Points</Link>
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
                       <Link to="/referrals">Refer & Earn</Link>
