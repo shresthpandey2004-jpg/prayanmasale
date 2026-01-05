@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { AuthProvider } from "@/context/AuthContext";
@@ -23,10 +24,12 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Referrals from "./pages/Referrals";
 import Loyalty from "./pages/Loyalty";
 import ReturnPolicy from "./pages/ReturnPolicy";
-import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
+
+// Lazy load TermsConditions to avoid build issues
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
 
 const queryClient = new QueryClient();
 
@@ -57,7 +60,14 @@ const App = () => (
                             <Route path="/referrals" element={<Referrals />} />
                             <Route path="/loyalty" element={<Loyalty />} />
                             <Route path="/return-policy" element={<ReturnPolicy />} />
-                            <Route path="/terms-conditions" element={<TermsConditions />} />
+                            <Route 
+                              path="/terms-conditions" 
+                              element={
+                                <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+                                  <TermsConditions />
+                                </Suspense>
+                              } 
+                            />
                             <Route path="/admin" element={<AdminDashboard />} />
                             <Route path="*" element={<NotFound />} />
                           </Routes>
