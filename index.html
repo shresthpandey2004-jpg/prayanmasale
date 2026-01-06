@@ -1,120 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- App Info -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayan Royal Spice Emporium - Premium Indian Spices</title>
-    <meta name="description" content="Premium quality Indian spices sourced directly from farmers. Fresh, authentic, and delivered to your doorstep. Pure Taste, Pure Emotions." />
-    <meta name="author" content="Prayan Masale" />
-    <meta name="keywords" content="indian spices, masala, garam masala, turmeric, spice shop, online spices, premium spices, authentic spices" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#f97316" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Prayan Masale" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Prayan Masale" />
-    
-    <!-- Mobile Optimization -->
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-orientations" content="portrait" />
-    
-    <!-- Performance -->
-    <meta name="dns-prefetch" content="//fonts.googleapis.com" />
-    <meta name="dns-prefetch" content="//fonts.gstatic.com" />
-    <meta name="preconnect" content="https://fonts.googleapis.com" />
-    <meta name="preconnect" content="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="/manifest.json" />
-    
-    <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-128x128.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="/icons/icon-128x128.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-72x72.png" />
-    
-    <!-- Splash Screens for iOS -->
-    <link rel="apple-touch-startup-image" href="/splash/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" />
-    <link rel="apple-touch-startup-image" href="/splash/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
-    <link rel="apple-touch-startup-image" href="/splash/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" />
-    <link rel="apple-touch-startup-image" href="/splash/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" />
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Prayan Royal Spice Emporium - Premium Indian Spices" />
-    <meta property="og:description" content="Premium quality Indian spices sourced directly from farmers. Fresh, authentic, and delivered to your doorstep." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://prayanmasale.vercel.app" />
-    <meta property="og:image" content="https://prayanmasale.vercel.app/og-image.jpg" />
-    <meta property="og:site_name" content="Prayan Masale" />
-    <meta property="og:locale" content="en_IN" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@prayanmasale" />
-    <meta name="twitter:title" content="Prayan Royal Spice Emporium" />
-    <meta name="twitter:description" content="Premium Indian spices delivered fresh to your doorstep" />
-    <meta name="twitter:image" content="https://prayanmasale.vercel.app/og-image.jpg" />
-    
-    <!-- Update contact number in schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Store",
-      "name": "Prayan Royal Spice Emporium",
-      "description": "Premium Indian spices sourced directly from farmers",
-      "url": "https://prayanmasale.vercel.app",
-      "telephone": "+918866658919",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Shop No. 15, Spice Market Complex",
-        "addressLocality": "Delhi",
-        "addressRegion": "Delhi",
-        "postalCode": "110006",
-        "addressCountry": "IN"
-      },
-      "openingHours": "Mo-Sa 09:00-20:00, Su 10:00-18:00",
-      "priceRange": "₹₹",
-      "servesCuisine": "Indian",
-      "paymentAccepted": "Cash, Credit Card, UPI"
-    }
-    </script>
-  </head>
-
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
-            });
-        });
-      }
-    </script>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .logo {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #ea580c;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+        .status {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .status h2 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        .contact-box {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .whatsapp {
+            color: #16a34a;
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            color: #374151;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .subtitle {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🌶️</div>
+        <h1>Prayan Royal Spice Emporium</h1>
+        <p class="subtitle">Premium Indian Spices & Masalas</p>
+        
+        <div class="status">
+            <h2>🔧 Website Under Maintenance</h2>
+            <p>We're updating our online store to serve you better!</p>
+        </div>
+        
+        <div class="contact-box">
+            <h2 style="color: #16a34a; margin-bottom: 15px;">📞 Contact Us</h2>
+            <div class="whatsapp">WhatsApp: +91 8866658919</div>
+            <div class="contact-info">
+                <p><strong>Business Hours:</strong> 9:00 AM - 8:00 PM (Mon-Sat)</p>
+                <p><strong>Sunday:</strong> 10:00 AM - 6:00 PM</p>
+                <p style="margin-top: 15px;">
+                    <strong>Services:</strong><br>
+                    • Premium Quality Spices<br>
+                    • Fresh Masala Blends<br>
+                    • Home Delivery Available<br>
+                    • Bulk Orders Welcome
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your patience. We'll be back online soon!</p>
+            <p style="margin-top: 10px;"><strong>Pure Taste, Pure Emotions</strong></p>
+        </div>
+    </div>
+</body>
 </html>
