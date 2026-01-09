@@ -14,8 +14,6 @@ import { ReviewProvider } from "@/context/ReviewContext";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
-import Recipes from "./pages/Recipes";
-import RecipeDetail from "./pages/RecipeDetail";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import MyOrders from "./pages/MyOrders";
@@ -51,8 +49,6 @@ const App = () => {
                               <Route path="/" element={<Index />} />
                               <Route path="/shop" element={<Shop />} />
                               <Route path="/product/:id" element={<ProductDetail />} />
-                              <Route path="/recipes" element={<Recipes />} />
-                              <Route path="/recipe/:id" element={<RecipeDetail />} />
                               <Route path="/checkout" element={<Checkout />} />
                               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                               <Route path="/my-orders" element={<MyOrders />} />
