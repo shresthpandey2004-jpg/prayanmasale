@@ -20,7 +20,11 @@ const RecipeDetail = () => {
   const [selectedSpices, setSelectedSpices] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   
+  console.log('RecipeDetail - ID from params:', id);
+  
   const recipe = id ? getRecipeById(id) : null;
+  
+  console.log('RecipeDetail - Recipe found:', recipe);
 
   useEffect(() => {
     if (recipe) {
@@ -40,19 +44,6 @@ const RecipeDetail = () => {
       setQuantities(defaultQuantities);
     }
   }, [recipe]);
-
-  if (!recipe) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
-          <Button onClick={() => navigate('/recipes')}>
-            Back to Recipes
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   const toggleSpice = (spiceId: string) => {
     const newSelected = new Set(selectedSpices);
@@ -87,7 +78,7 @@ const RecipeDetail = () => {
     if (addedCount > 0) {
       toast({
         title: "Spices Added to Cart! 🛒",
-        description: `${addedCount} spices added for ${recipe.name}`,
+        description: `${addedCount} spices added for ${recipe?.name}`,
       });
     } else {
       toast({
@@ -125,6 +116,20 @@ const RecipeDetail = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  if (!recipe) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
+          <p className="mb-4">Recipe ID: {id}</p>
+          <Button onClick={() => navigate('/recipes')}>
+            Back to Recipes
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
