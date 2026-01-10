@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/layout/Header';
 import { useCart } from '@/context/CartContext';
-import { getRecipeById } from '@/data/recipes';
+import { getRecipeById, recipes } from '@/data/recipes';
 import { products } from '@/data/products';
 
 const RecipeDetail = () => {

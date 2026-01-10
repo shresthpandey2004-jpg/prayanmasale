@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Test - Prayan Masale</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #fef7ed, #fed7aa);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ea580c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .recipe-card {
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .recipe-card h3 {
+            color: #1f2937;
+            margin: 0 0 10px 0;
+        }
+        .recipe-card p {
+            margin: 5px 0;
+            color: #6b7280;
+        }
+        .hindi-name {
+            color: #ea580c !important;
+            font-weight: 600;
+        }
+        .test-btn {
+            background: #ea580c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .test-btn:hover {
+            background: #dc2626;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #dcfce7;
+            border: 1px solid #16a34a;
+            color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍛 Recipe System Test</h1>
+        
+        <div class="status">
+            <strong>Status:</strong> Testing recipe data and routing functionality
+        </div>
+        
+        <h2>Available Recipes:</h2>
+        
+        <div class="recipe-card">
+            <h3>Butter Chicken</h3>
+            <p class="hindi-name">बटर चिकन</p>
+            <p><strong>ID:</strong> butter-chicken</p>
+            <p><strong>Category:</strong> Non-Vegetarian</p>
+            <p><strong>Difficulty:</strong> Medium</p>
+            <button class="test-btn" onclick="testRecipe('butter-chicken')">Test This Recipe</button>
+        </div>
+        
+        <div class="recipe-card">
+            <h3>Chicken Biryani</h3>
+            <p class="hindi-name">चिकन बिरयानी</p>
+            <p><strong>ID:</strong> biryani</p>
+            <p><strong>Category:</strong> Non-Vegetarian</p>
+            <p><strong>Difficulty:</strong> Hard</p>
+            <button class="test-btn" onclick="testRecipe('biryani')">Test This Recipe</button>
+        </div>
+        
+        <div class="recipe-card">
+            <h3>Dal Tadka</h3>
+            <p class="hindi-name">दाल तड़का</p>
+            <p><strong>ID:</strong> dal-tadka</p>
+            <p><strong>Category:</strong> Vegetarian</p>
+            <p><strong>Difficulty:</strong> Easy</p>
+            <button class="test-btn" onclick="testRecipe('dal-tadka')">Test This Recipe</button>
+        </div>
+        
+        <div class="recipe-card">
+            <h3>Rajma Masala</h3>
+            <p class="hindi-name">राजमा मसाला</p>
+            <p><strong>ID:</strong> rajma-masala</p>
+            <p><strong>Category:</strong> Vegetarian</p>
+            <p><strong>Difficulty:</strong> Medium</p>
+            <button class="test-btn" onclick="testRecipe('rajma-masala')">Test This Recipe</button>
+        </div>
+        
+        <div class="recipe-card">
+            <h3>Chole Bhature</h3>
+            <p class="hindi-name">छोले भटूरे</p>
+            <p><strong>ID:</strong> chole-bhature</p>
+            <p><strong>Category:</strong> Vegetarian</p>
+            <p><strong>Difficulty:</strong> Medium</p>
+            <button class="test-btn" onclick="testRecipe('chole-bhature')">Test This Recipe</button>
+        </div>
+        
+        <div class="recipe-card">
+            <h3>Paneer Butter Masala</h3>
+            <p class="hindi-name">पनीर बटर मसाला</p>
+            <p><strong>ID:</strong> paneer-butter-masala</p>
+            <p><strong>Category:</strong> Vegetarian</p>
+            <p><strong>Difficulty:</strong> Easy</p>
+            <button class="test-btn" onclick="testRecipe('paneer-butter-masala')">Test This Recipe</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="test-btn" onclick="window.location.href='/'">← Back to Home</button>
+            <button class="test-btn" onclick="window.location.href='/recipes'">Go to Recipes Page</button>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #fef3c7; border-radius: 8px;">
+            <h3>🔧 Debug Information:</h3>
+            <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+            <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+            <p><strong>Timestamp:</strong> <span id="timestamp"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        // Debug information
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        function testRecipe(recipeId) {
+            console.log('Testing recipe:', recipeId);
+            
+            // Try to navigate to recipe page
+            const recipeUrl = `/recipe/${recipeId}`;
+            console.log('Navigating to:', recipeUrl);
+            
+            // Show loading message
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Loading...';
+            btn.disabled = true;
+            
+            // Navigate after short delay
+            setTimeout(() => {
+                window.location.href = recipeUrl;
+            }, 500);
+        }
+        
+        // Log page load
+        console.log('Recipe test page loaded');
+        console.log('Available recipes: butter-chicken, biryani, dal-tadka, rajma-masala, chole-bhature, paneer-butter-masala');
+    </script>
+</body>
+</html>
